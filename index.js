@@ -30,6 +30,8 @@ const run = async ()=>{
     const bookingCollection = client.db('bicycles').collection('bookings');
     const userCollection = client.db('bicycles').collection('users');
     const paymentCollection = client.db('doctors_portal').collection('payments');
+    const ordersCollection = client.db('doctors_portal').collection('orders');
+
 
     app.get('/parts', async(req, res)=>{
         const query = {};
@@ -58,6 +60,31 @@ const run = async ()=>{
        // sendAppointmentEmail(booking);
         return res.send({ success: true, result });
       });
+
+
+      
+      app.get('/order', async (req, res) => {
+        const cursor = await ordersCollection.find({}).toArray();
+        return res.send(cursor);
+      });
+      
+      app.get('/order/:id', async (req, res) => {
+        const id = req.params.id;
+        const query = {_id: ObjectId(id)};
+        const cursor = await ordersCollection.findOne(query);
+        return res.send(cursor);
+      });
+
+      app.post('/order', async (req, res) => {
+        const orderData = req.body;
+      
+        const result = await ordersCollection.insertOne(orderData);
+    
+       // sendAppointmentEmail(booking);
+        return res.send({ success: true, result });
+      });
+
+
 
       app.put('/parts/:id', async(req, res) =>{
         const id  = req.params.id;
