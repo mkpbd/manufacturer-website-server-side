@@ -48,11 +48,12 @@ const run = async ()=>{
 
       app.post('/parts', async (req, res) => {
         const part = req.body;
-        const exists = await partsCollection.findOne(query);
-        if (exists) {
-          return res.send({ success: false, booking: exists })
-        }
-        const result = await bookingCollection.insertOne(booking);
+        console.log("parts ", part)
+        const exists = await partsCollection.findOne(part);
+        // if (exists) {
+        //   return res.send({ success: false, parts: exists })
+        // }
+        const result = await partsCollection.insertOne(part);
         console.log('sending email');
        // sendAppointmentEmail(booking);
         return res.send({ success: true, result });
