@@ -2,14 +2,13 @@ const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
-
 const app = express();
-const port = process.env.PORT || 5000;
+
 const objectId = require('mongodb').ObjectId;
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const stripe =  require('stripe')('sk_test_51L4knSEpb7itOfoJKwq4WlgC1kbB5rfAIH1Wb8C2khytSzcqhrjutLDNClG0mHYc1RsikclhInj7eSiQ9qrz0hGX003oOEsQPR');
+const stripe =  require('stripe')(process.env.STRIPE_TOKEN_KEY);
 
-
+const port = process.env.PORT || 5000;
 
 
 
