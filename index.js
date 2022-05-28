@@ -26,7 +26,7 @@ const port = process.env.PORT || 5000;
 const corsConfig = {
   origin: '*',
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE']
+  methods: ['GET', 'POST', 'PUT', 'DELETE','PATCH ']
 }
 app.use(cors(corsConfig))
 app.options("*", cors(corsConfig))
@@ -109,11 +109,12 @@ const run = async ()=>{
         console.log(part);
     })
 
-    app.get('/pats/:id',  async(req, res) =>{
+    app.get('/part/:id',  async(req, res) =>{
         const id = req.params.id;
-        const query = {_id: ObjectId(id)};
+        const query = {_id: objectId(id)};
         const part = await partsCollection.findOne(query);
         res.send(part);
+       console.log("id", id)
       })
 
       app.post('/parts', async (req, res) => {
@@ -129,6 +130,13 @@ const run = async ()=>{
         return res.send({ success: true, result });
       });
 
+
+      app.delete('/parts/:id', async (req, res) => {
+        const _id = req.params.id;
+        const query = { _id: objectId(_id) };
+        const result = await partsCollection.deleteOne(query);
+        return res.send({ success: true, result });
+      });
 
       
       app.get('/order', async (req, res) => {
@@ -168,18 +176,26 @@ const run = async ()=>{
 
 
 
-      app.put('/parts/:id', async(req, res) =>{
+      app.patch('/parts/:id', async(req, res) =>{
         const id  = req.params.id;
         const parts = req.body;
-        const filter = {_id: ObjectId(id)};
+        const filter = {_id: objectId(id)};
         const options = { upsert: true };
         const updatedDoc = {
           $set: {
-            title: parts.itemName,    
+            itemName: parts.itemName,
+            description: parts.description,
+            price: parts.price,
+            quantity: parts.quantity,
+            minimumOrderQty : parts.minimumOrderQty,
+            email: parts.email,
           }
         }
-        const pats = await partsCollection.updateOne(filter, updatedDoc, options);
+        const pats = await partsCollection.updateOne(filter, updatedDoc);
         res.send(pats);
+
+        console.log("data update", parts)
+
       })
 
 
