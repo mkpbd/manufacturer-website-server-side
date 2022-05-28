@@ -6,7 +6,8 @@ const objectId = require('mongodb').ObjectId;
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
-
+const app = express();
+const port = process.env.PORT || 5000;
 
 
 // const corsConfig = {
@@ -45,13 +46,12 @@ app.use(function (req, res, next) {
 //   next();
 // });
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   next();
+// });
 
-const app = express();
-const port = process.env.PORT || 5000;
+
 // 5QAQBudMgOOaogVq
 // mostofakamal
 
