@@ -294,7 +294,7 @@ app.put('/myprofile/:email', async(req, res) =>{
 // Review Area 
 app.get('/review', async (req, res) => {
 
-  const result = await reviewCollection.find({}).toArray();
+  const result = await reviewCollection.find({}).sort({_id:-1}).toArray();
   console.log(result);
   res.send(result);
    
