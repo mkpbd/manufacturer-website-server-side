@@ -233,6 +233,16 @@ app.put('/myprofile/:email', async(req, res) =>{
   res.send(result);
 })
 // Review Area 
+app.get('/review', async (req, res) => {
+
+  const result = await reviewCollection.find({}).toArray();
+  console.log(result);
+  res.send(result);
+   
+});
+
+
+
 
 app.post('/review', async (req, res) => {
   const part = req.body;
