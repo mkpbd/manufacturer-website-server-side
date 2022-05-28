@@ -9,21 +9,41 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 
 
 
+// const corsConfig = {
+//   origin: '*',
+//   credential: true,
+//   methods:['GET','POST','PUT','DELETE','PATCH']
+// }
+// const corsOptions ={
+//   origin:'*', 
+//   credentials:true,            //access-control-allow-credentials:true
+//   optionSuccessStatus:200,
+// }
+// app.use(cors(corsOptions));
+//app.options('*', cors(corsConfig));
+
 const corsConfig = {
   origin: '*',
-  credential: true,
-  methods:['GET','POST','PUT','DELETE','PATCH']
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
 }
-app.use(cors(corsConfig));
-app.options('*', cors(corsConfig));
+app.use(cors(corsConfig))
+app.options("*", cors(corsConfig))
+app.use(express.json())
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,authorization")
+  next()
+})
 
-app.use(express.json());
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-headers', 'Origin, X-Requested-With, Content-Type, Accept, authorization')
-  next();
-});
+// app.use(express.json());
+
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-headers', 'Origin, X-Requested-With, Content-Type, Accept, authorization')
+//   next();
+// });
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
