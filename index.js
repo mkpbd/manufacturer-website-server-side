@@ -58,6 +58,7 @@ const run = async ()=>{
     const userCollection = client.db('bicycles').collection('users');
     const paymentCollection = client.db('bicycles').collection('payments');
     const ordersCollection = client.db('bicycles').collection('orders');
+    const reviewCollection = client.db('bicycles').collection('reviews');
 
 
     app.get('/parts', async(req, res)=>{
@@ -231,6 +232,20 @@ app.put('/myprofile/:email', async(req, res) =>{
   console.log(result);
   res.send(result);
 })
+// Review Area 
+
+app.post('/review', async (req, res) => {
+  const part = req.body;
+  console.log("parts ", part)
+  const exists = await reviewCollection.findOne(part);
+  // if (exists) {
+  //   return res.send({ success: false, parts: exists })
+  // }
+  const result = await reviewCollection.insertOne(part);
+  console.log('sending email');
+ // sendAppointmentEmail(booking);
+  return res.send({ success: true, result });
+});
 
 
 
