@@ -176,6 +176,18 @@ app.put('/user/admin/:email', verifyJWT, async (req, res) => {
  
 })
 
+app.patch('/user/admin/:id', async(req, res)=>{
+  const id = req.params.id;
+  console.log("objec id for pathch", id);
+  const filter = {_id: objectId(id)};
+
+  const updateDoc = {
+    $set: { role: null },
+  };
+  const result = await userCollection.updateOne(filter, updateDoc);
+  res.send(result);
+})
+
 app.put('/user/:email', async (req, res) => {
   const email = req.params.email;
   const user = req.body;
