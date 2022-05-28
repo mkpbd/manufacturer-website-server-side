@@ -8,12 +8,22 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 
 
 
-app.use(cors(
-  {
-    origin: ['https://bicycle-parts-manufactur-14c27.web.app/', 'http://localhost:5000']
+
+const corsConfig = {
+  origin: '*',
+  credential: true,
+  methods:['GET','POST','PUT','DELETE','PATCH']
 }
-));
+app.use(cors(corsConfig));
+app.options('*', cors(corsConfig));
+
 app.use(express.json());
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-headers', 'Origin, X-Requested-With, Content-Type, Accept, authorization')
+  next();
+});
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
