@@ -2,13 +2,13 @@ const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
-const objectId = require('mongodb').ObjectId;
-
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const stripe =  require('stripe')('sk_test_51L4knSEpb7itOfoJKwq4WlgC1kbB5rfAIH1Wb8C2khytSzcqhrjutLDNClG0mHYc1RsikclhInj7eSiQ9qrz0hGX003oOEsQPR');
 
 const app = express();
 const port = process.env.PORT || 5000;
+const objectId = require('mongodb').ObjectId;
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const stripe =  require('stripe')('sk_test_51L4knSEpb7itOfoJKwq4WlgC1kbB5rfAIH1Wb8C2khytSzcqhrjutLDNClG0mHYc1RsikclhInj7eSiQ9qrz0hGX003oOEsQPR');
+
 
 
 
@@ -29,7 +29,7 @@ const port = process.env.PORT || 5000;
 const corsConfig = {
   origin: '*',
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE','PATCH ']
+  methods: ['GET', 'POST', 'PUT', 'DELETE','PATCH']
 }
 app.use(cors(corsConfig))
 app.options("*", cors(corsConfig))
@@ -327,7 +327,7 @@ app.post("/create-payment-intent", async (req, res) => {
   const paymentIntent = await stripe.paymentIntents.create({
     amount: amount,
     currency: "usd",
-    automatic_payment_methods: ['card']
+    payment_method_types: ['card']
   });
 
   console.log("payments", paymentIntent);
